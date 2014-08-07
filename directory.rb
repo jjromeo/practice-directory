@@ -24,7 +24,7 @@ end
 
 def print(details)
 	details.each_with_index do |x, y|
-		puts "#{y + 1}. #{x[:name]} (#{x[:cohort]} cohort)"
+		puts "#{y + 1}. #{x[:name]} (#{x[:cohort]} cohort)" if x[:name].downcase.start_with?('a')
 	end
 end
 
