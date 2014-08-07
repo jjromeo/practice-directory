@@ -1,6 +1,3 @@
-#first we print the list of students
-puts "The students of my cohort at Makers Academy"
-puts "-----------------"
 # let's put all students into an array
 students =[
 "Peter Smith",
@@ -15,25 +12,25 @@ students =[
 "Peter Smith",
 "Peter Smith",
 "Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith"
 ]
 # and then print them
+def print_header
+	puts "The students of my cohort at Makers Academy"
+	puts "-----------------"
+end
 
-students.each do |x|
-	puts x
+def print(names)
+	names.each do |x|
+		puts x
+	end
 end
 
 #finally, we print the total
-puts "Overall, we have #{students.length} great students "
-#it's important that print() doesn't add newline characters
+def print_footer(names)
+	puts "Overall, we have #{names.length} great students "
+end
+
+#nothing happens until we call the methods
+print_header
+print(students)
+print_footer(students)
