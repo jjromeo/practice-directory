@@ -1,17 +1,17 @@
 # let's put all students into an array
 students =[
-"Peter Smith",
-"Jane Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
-"Marianne Smith",
-"Peter Smith",
-"Peter Smith",
-"Peter Smith",
+[name: "Peter Smith", :cohort => :november],
+[name: "Jane Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Marianne Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november],
+[name: "Peter Smith", :cohort => :november]
 ]
 # and then print them
 def print_header
@@ -19,9 +19,9 @@ def print_header
 	puts "-----------------"
 end
 
-def print(names)
-	names.each do |x|
-		puts x
+def print(details)
+	details.each do |x, y|
+		puts "#{x[:name]} (#{x[:cohort]} cohort)"
 	end
 end
 
