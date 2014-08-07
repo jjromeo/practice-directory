@@ -22,3 +22,7 @@ puts "Peter Smith"
 puts "Peter Smith"
 puts "Peter Smith"
 puts "Peter Smith"
+
+print "Overall we have "
+print 24
+puts " great students"
