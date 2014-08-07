@@ -23,8 +23,8 @@ def print_header
 end
 
 def print(details)
-	details.each do |x, y|
-		puts "#{x[:name]} (#{x[:cohort]} cohort)"
+	details.each_with_index do |x, y|
+		puts "#{y + 1}. #{x[:name]} (#{x[:cohort]} cohort)"
 	end
 end
 
