@@ -7,7 +7,13 @@ def input_students
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		# add the student hash to the array
-		@students << {name: name, :cohort => :november}
+		puts "What is #{name}'s Hobby"
+		hobby = gets.chomp
+		puts "When was #{name} born (dd/mm/yyyy)?"
+		dob = gets.chomp
+		puts "Which country was #{name} born in?"
+		cob = gets.chomp
+		@students << {name: name, cohort: :november, hobby: hobby, dob: dob, cob: cob}
 		puts "Now we have #{@students.length} students"
 		# get another name from the user
 		puts "Please enter the name of the next student"
@@ -64,7 +70,7 @@ end
 def print_students_list
 	i = 0
 		while i < @students.length do 
-		puts "#{@students[i][:name]} (#{@students[i][:cohort]} cohort)"
+		puts "#{@students[i][:name]} (#{@students[i][:cohort]} cohort), their hobby is #{@students[i][:hobby]} and they were born on the #{@students[i][:dob]} in #{@students[i][:cob]}. "
 		i += 1
 	end
 end
