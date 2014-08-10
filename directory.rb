@@ -70,7 +70,7 @@ end
 def print_students_list
 	i = 0
 		while i < @students.length do 
-		puts "#{@students[i][:name]} (#{@students[i][:cohort]} cohort), their hobby is #{@students[i][:hobby]} and they were born on the #{@students[i][:dob]} in #{@students[i][:cob]}. "
+		puts "#{@students[i][:name]} (#{@students[i][:cohort]} cohort)".center(85), "Their hobby is #{@students[i][:hobby]} and they were born on the #{@students[i][:dob]} in #{@students[i][:cob]}.".center(85)
 		i += 1
 	end
 end
