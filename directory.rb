@@ -1,37 +1,42 @@
 @students = [] # an empty array accesible to all methods
 @check
-
+@name
+@cohort
+@hobby 
+@dob
+@cob
+	
 def input_students
 	puts "Please enter the names of the students"
 	puts "To finish, just hit return twice"
-	name = STDIN.gets.slice(0..-2)
+	@name = STDIN.gets.slice(0..-2)
 	# while the name is not empty, repeat this code
-	while !name.empty? do
-		puts "What cohort is #{name} in?"
-		cohort = STDIN.gets.slice(0..-2)
-		cohort = "August" if cohort.empty?
-		puts "What is #{name}'s Hobby"
-		hobby = STDIN.gets.slice(0..-2)
-		puts "When was #{name} born (dd/mm/yyyy)?"
-		dob = STDIN.gets.slice(0..-2)
-		puts "Which country was #{name} born in?"
-		cob = STDIN.gets.slice(0..-2)
+	while !@name.empty? do
+		puts "What cohort is #{@name} in?"
+		@cohort = STDIN.gets.slice(0..-2)
+		@cohort = "August" if @cohort.empty?
+		puts "What is #{@name}'s Hobby"
+		@hobby = STDIN.gets.slice(0..-2)
+		puts "When was #{@name} born (dd/mm/yyyy)?"
+		@dob = STDIN.gets.slice(0..-2)
+		puts "Which country was #{@name} born in?"
+		@cob = STDIN.gets.slice(0..-2)
 		#check that the student was entered correctly
-		puts "You entered: #{name} | Hobby: #{hobby} | Date of birth: #{dob} | Country of birth: #{cob}\n Is this correct? y/n"
-		@check = STDINgets.chomp.downcase
+		puts "You entered: #{@name} | Hobby: #{@hobby} | Date of birth: #{@dob} | Country of birth: #{@cob}\n Is this correct? y/n"
+		@check = STDIN.gets.chomp.downcase
 		until @check == "y" || @check == "n" do
-		puts "Sorry, please answer y or n. You entered: #{name} | Hobby: #{hobby} | Date of birth: #{dob} | Country of birth: #{cob}\n Is this correct? y/n"
+		puts "Sorry, please answer y or n. You entered: #{@name} | Hobby: #{@hobby} | Date of birth: #{@dob} | Country of birth: #{@cob}\n Is this correct? y/n"
 			@check = STDIN.gets.chomp.downcase
 			end
 			if @check == "y" 
-				@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
+				@students << {name: @name, cohort: @cohort.to_sym, hobby: @hobby, dob: @dob, cob: @cob}
 				puts "now we have #{@students.length} students"
 			else 
 				puts "please enter the student's details again"
 		end
 		#get another name from the user
 		puts "enter student name"
-		name = STDIN.gets.slice(0..-2)
+		@name = STDIN.gets.slice(0..-2)
 	end
 	# return array of students
 	@students
@@ -123,8 +128,8 @@ end
 def load_students(filename = "students.csv")
 	file = File.open(filename, "r")
 	file.readlines.each do |line|
-	name, cohort, hobby, dob, cob = line.chomp.split(',')
-		@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
+	@name, @cohort, @hobby, @dob, @cob = line.chomp.split(',')
+		@students << {name: @name, cohort: @cohort.to_sym, hobby: @hobby, dob: @dob, cob: @cob}
 	end
 	file.close
 end
