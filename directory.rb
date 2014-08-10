@@ -4,24 +4,24 @@
 def input_students
 	puts "Please enter the names of the students"
 	puts "To finish, just hit return twice"
-	name = gets.slice(0..-2)
+	name = STDIN.gets.slice(0..-2)
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		puts "What cohort is #{name} in?"
-		cohort = gets.slice(0..-2)
+		cohort = STDIN.gets.slice(0..-2)
 		cohort = "August" if cohort.empty?
 		puts "What is #{name}'s Hobby"
-		hobby = gets.slice(0..-2)
+		hobby = STDIN.gets.slice(0..-2)
 		puts "When was #{name} born (dd/mm/yyyy)?"
-		dob = gets.slice(0..-2)
+		dob = STDIN.gets.slice(0..-2)
 		puts "Which country was #{name} born in?"
-		cob = gets.slice(0..-2)
+		cob = STDIN.gets.slice(0..-2)
 		#check that the student was entered correctly
 		puts "You entered: #{name} | Hobby: #{hobby} | Date of birth: #{dob} | Country of birth: #{cob}\n Is this correct? y/n"
-		@check = gets.chomp.downcase
+		@check = STDINgets.chomp.downcase
 		until @check == "y" || @check == "n" do
 		puts "Sorry, please answer y or n. You entered: #{name} | Hobby: #{hobby} | Date of birth: #{dob} | Country of birth: #{cob}\n Is this correct? y/n"
-			@check = gets.chomp.downcase
+			@check = STDIN.gets.chomp.downcase
 			end
 			if @check == "y" 
 				@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
@@ -31,7 +31,7 @@ def input_students
 		end
 		#get another name from the user
 		puts "enter student name"
-		name = gets.slice(0..-2)
+		name = STDIN.gets.slice(0..-2)
 	end
 	# return array of students
 	@students
@@ -53,7 +53,7 @@ def interactive_menu
 	#1. print the menu and ask the user what to do
 	print_menu
 	#2. read the input and save it into a variable
-	process(gets.chomp)
+	process(STDIN.gets.chomp)
 	#3. do what the user has asked
 	end
 end
@@ -94,15 +94,15 @@ def prints_student_details
 	if !@students.empty?
 		#lists the cohort
 		cohorts.each do |cohort|
-			print "The #{cohort} cohort\n"
+			print "\nThe #{cohort} cohort\n\n"
 		#lists the students in that cohort
 			@students.select {|x| x[:cohort] == cohort}.each_with_index do |student, i|
-				print "#{i + 1}. #{student[:name]}. Their hobby is #{student[:hobby]} and they were born on the #{student[:dob]} in #{student[:cob]}.\n".center(50) 
+				print "#{i + 1}. #{student[:name]}. Their hobby is #{student[:hobby]} and they were born on the #{student[:dob]} in #{student[:cob]}.\n" 
 				end
 			end
 		if @students.length > 1
-					 puts "Overall, we have #{@students.length} great students " 
-				else puts "Overall, we have #{@students.length} great student"
+					 puts "Overall, we have #{@students.length} great students \n\n" 
+				else puts "Overall, we have #{@students.length} great student \n\n"
 				end
 	else
 		puts "The student directory is currently empty"
@@ -120,13 +120,27 @@ def save_students
 	file.close
 end
 
-def load_students
-	file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+	file = File.open(filename, "r")
 	file.readlines.each do |line|
 	name, cohort, hobby, dob, cob = line.chomp.split(',')
 		@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
 	end
 	file.close
 end
+
+def try_load_students
+	filename = ARGV.first # first argument from the command line
+	return if filename.nil? # get out of the method if it isn't given
+	if File.exists?(filename) #if it exists
+		load_students(filename)
+		puts "Loaded #{@students.length} from #{filename}"
+	else # if it doesn't exist
+		puts "Sorry, #{filename} doesn't exist"
+		exit #quit the program
+	end
+end
+
 #nothing happens until we call the methods
+try_load_students
 interactive_menu
