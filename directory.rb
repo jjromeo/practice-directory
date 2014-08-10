@@ -3,25 +3,25 @@
 def input_students
 	puts "Please enter the names of the students"
 	puts "To finish, just hit return twice"
-	name = gets.chomp
+	name = gets.slice(0..-2)
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		puts "What cohort is #{name} in?"
-		cohort = gets.chomp
+		cohort = gets.slice(0..-2)
 		cohort = "August" if cohort.empty?
 		puts "What is #{name}'s Hobby"
-		hobby = gets.chomp
+		hobby = gets.chomp.slice(0..-2)
 		puts "When was #{name} born (dd/mm/yyyy)?"
-		dob = gets.chomp
+		dob = gets.chomp.slice(0..-2)
 		puts "Which country was #{name} born in?"
-		cob = gets.chomp
+		cob = gets.chomp.slice(0..-2)
 		#check that the student was entered correctly
 		puts "You entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
 		puts "is the above information correct?(y/n)"
 		check = gets.chomp.downcase
 		until check == 'y' || check.downcase == 'n' do
 			puts "I'm sorry, but please answer either 'y' or 'n', you entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
-			check = gets.chomp.downcase
+			check = gets.downcase
 			end
 			if check == "y" 
 				@students << {name: name, cohort: cohort, hobby: hobby, dob: dob, cob: cob}
@@ -31,7 +31,7 @@ def input_students
 		end
 		#get another name from the user
 		puts "enter student name"
-		name = gets.chomp
+		name = gets.slice(0..-2)
 	end
 	# return array of students
 	@students
