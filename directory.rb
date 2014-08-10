@@ -11,20 +11,20 @@ def input_students
 		cohort = gets.slice(0..-2)
 		cohort = "August" if cohort.empty?
 		puts "What is #{name}'s Hobby"
-		hobby = gets.chomp.slice(0..-2)
+		hobby = gets.slice(0..-2)
 		puts "When was #{name} born (dd/mm/yyyy)?"
-		dob = gets.chomp.slice(0..-2)
+		dob = gets.slice(0..-2)
 		puts "Which country was #{name} born in?"
-		cob = gets.chomp.slice(0..-2)
+		cob = gets.slice(0..-2)
 		#check that the student was entered correctly
-		puts "You entered: #{@name} | Hobby: #{@hobby} | Date of birth: #{@dob} | Country of birth: #{@cob}\n Is this correct? y/n"
+		puts "You entered: #{name} | Hobby: #{hobby} | Date of birth: #{dob} | Country of birth: #{cob}\n Is this correct? y/n"
 		@check = gets.chomp.downcase
 		until @check == "y" || @check == "n" do
-		puts "Sorry, please answer y or n. You entered: #{@name} | Hobby: #{@hobby} | Date of birth: #{@dob} | Country of birth: #{@cob}\n Is this correct? y/n"
+		puts "Sorry, please answer y or n. You entered: #{name} | Hobby: #{hobby} | Date of birth: #{dob} | Country of birth: #{cob}\n Is this correct? y/n"
 			@check = gets.chomp.downcase
 			end
 			if @check == "y" 
-				@students << {name: name, cohort: cohort, hobby: hobby, dob: dob, cob: cob}
+				@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
 				puts "now we have #{@students.length} students"
 			else 
 				puts "please enter the student's details again"
@@ -62,6 +62,7 @@ def print_menu
 	puts "1. Input the students"
 	puts "2. Show the students"
 	puts "3. Save the list to students.csv"
+	puts "4. Load the list from students.csv"
 	puts "9. Exit" #9 because we'll be adding more items
 end
 
@@ -75,6 +76,8 @@ def process(selection)
 	  show_students
 	  when "3"
 	  save_students
+	  when "4"
+		load_students
 	  when "9"
 		  exit # this will cause the program to terminate
 	  else
@@ -95,12 +98,12 @@ def prints_student_details
 		#lists the students in that cohort
 			@students.select {|x| x[:cohort] == cohort}.each_with_index do |student, i|
 				print "#{i + 1}. #{student[:name]}. Their hobby is #{student[:hobby]} and they were born on the #{student[:dob]} in #{student[:cob]}.\n".center(50) 
-				if @students.length > 1
+				end
+			end
+		if @students.length > 1
 					 puts "Overall, we have #{@students.length} great students " 
 				else puts "Overall, we have #{@students.length} great student"
 				end
-			end
-		end
 	else
 		puts "The student directory is currently empty"
 	end
@@ -117,6 +120,13 @@ def save_students
 	file.close
 end
 
-
+def load_students
+	file = File.open("students.csv", "r")
+	file.readlines.each do |line|
+	name, cohort, hobby, dob, cob = line.chomp.split(',')
+		@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
+	end
+	file.close
+end
 #nothing happens until we call the methods
 interactive_menu
