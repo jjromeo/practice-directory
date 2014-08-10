@@ -7,7 +7,7 @@ def input_students
 	# while the name is not empty, repeat this code
 	while !name.empty? do
 		# add the student hash to the array
-		@students << {:name => name, :cohort => :november}
+		@students << {name: name, :cohort => :november}
 		puts "Now we have #{@students.length} students"
 		# get another name from the user
 		puts "Please enter the name of the next student"
@@ -62,8 +62,10 @@ def process(selection)
 end
 
 def print_students_list
-		@students.each_with_index do |x, y|
-		puts "#{y + 1}. #{x[:name]} (#{x[:cohort]} cohort)" if x[:name].length < 12
+	i = 0
+		while i < @students.length do 
+		puts "#{@students[i][:name]} (#{@students[i][:cohort]} cohort)"
+		i += 1
 	end
 end
 
