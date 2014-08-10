@@ -15,21 +15,23 @@ def input_students
 		dob = gets.chomp
 		puts "Which country was #{name} born in?"
 		cob = gets.chomp
+		#check that the student was entered correctly
 		puts "You entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
 		puts "is the above information correct?(y/n)"
-		case gets.chomp.downcase
-		when "y"
-			# add the student hash to the array
-			@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
-			puts "Now we have #{@students.length} students"
-			# get another name from the user
-			puts "Please enter the name of the next student"
-			name = gets.chomp
-		when "n"
-			puts "Please enter the students details again"
-		else
-			puts "I'm sorry I didn't get that, pleas answer y or n"
+		check = gets.chomp.downcase
+		until check == 'y' || check.downcase == 'n' do
+			puts "I'm sorry, but please answer either 'y' or 'n', you entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
+			check = gets.chomp.downcase
+			end
+			if check == "y" 
+				@students << {name: name, cohort: cohort, hobby: hobby, dob: dob, cob: cob}
+				puts "now we have #{@students.length} students"
+			else 
+				puts "please enter the student's details again"
 		end
+		#get another name from the user
+		puts "enter student name"
+		name = gets.chomp
 	end
 	# return array of students
 	@students
@@ -49,7 +51,7 @@ end
 
 def show_students
 	print_header
-	print_students_list
+	prints_student_details
 	print_footer
 end
 
@@ -79,12 +81,20 @@ def process(selection)
 
 end
 
-def print_students_list
-	i = 0
-		while i < @students.length do 
-		puts "#{@students[i][:name]} (#{@students[i][:cohort]} cohort)".center(85), "Their hobby is #{@students[i][:hobby]} and they were born on the #{@students[i][:dob]} in #{@students[i][:cob]}.".center(85)
-		i += 1
-	end
+def cohorts 
+	@students.map { |mapitem| mapitem[:cohort]}.uniq
+end
+
+
+def prints_student_details
+	#lists the cohort
+	cohorts.each do |cohort|
+		print "The #{cohort} cohort\n"
+	#lists the students in that cohort
+		@students.select {|x| x[:cohort] == cohort}.each_with_index do |student, i|
+			print "#{i + 1}. #{student[:name]}. Their hobby is #{student[:hobby]} and they were born on the #{student[:dob]} in #{student[:cob]}.\n".center(50) 
+		end
+	end	
 end
 
 #finally, we print the total
