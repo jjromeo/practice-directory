@@ -6,18 +6,30 @@ def input_students
 	name = gets.chomp
 	# while the name is not empty, repeat this code
 	while !name.empty? do
-		# add the student hash to the array
+		puts "What cohort is #{name} in?"
+		cohort = gets.chomp
+		cohort = "August" if cohort.empty?
 		puts "What is #{name}'s Hobby"
 		hobby = gets.chomp
 		puts "When was #{name} born (dd/mm/yyyy)?"
 		dob = gets.chomp
 		puts "Which country was #{name} born in?"
 		cob = gets.chomp
-		@students << {name: name, cohort: :november, hobby: hobby, dob: dob, cob: cob}
-		puts "Now we have #{@students.length} students"
-		# get another name from the user
-		puts "Please enter the name of the next student"
-		name = gets.chomp
+		puts "You entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
+		puts "is the above information correct?(y/n)"
+		case gets.chomp.downcase
+		when "y"
+			# add the student hash to the array
+			@students << {name: name, cohort: cohort.to_sym, hobby: hobby, dob: dob, cob: cob}
+			puts "Now we have #{@students.length} students"
+			# get another name from the user
+			puts "Please enter the name of the next student"
+			name = gets.chomp
+		when "n"
+			puts "Please enter the students details again"
+		else
+			puts "I'm sorry I didn't get that, pleas answer y or n"
+		end
 	end
 	# return array of students
 	@students
