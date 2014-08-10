@@ -1,4 +1,5 @@
 @students = [] # an empty array accesible to all methods
+@check
 
 def input_students
 	puts "Please enter the names of the students"
@@ -16,14 +17,13 @@ def input_students
 		puts "Which country was #{name} born in?"
 		cob = gets.chomp.slice(0..-2)
 		#check that the student was entered correctly
-		puts "You entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
-		puts "is the above information correct?(y/n)"
-		check = gets.chomp.downcase
-		until check == 'y' || check.downcase == 'n' do
-			puts "I'm sorry, but please answer either 'y' or 'n', you entered #{name} |Cohort: #{cohort}|Hobby: #{hobby}|Date of birth: #{dob}| Country of birth: #{cob}"
-			check = gets.downcase
+		puts "You entered: #{@name} | Hobby: #{@hobby} | Date of birth: #{@dob} | Country of birth: #{@cob}\n Is this correct? y/n"
+		@check = gets.chomp.downcase
+		until @check == "y" || @check == "n" do
+		puts "Sorry, please answer y or n. You entered: #{@name} | Hobby: #{@hobby} | Date of birth: #{@dob} | Country of birth: #{@cob}\n Is this correct? y/n"
+			@check = gets.chomp.downcase
 			end
-			if check == "y" 
+			if @check == "y" 
 				@students << {name: name, cohort: cohort, hobby: hobby, dob: dob, cob: cob}
 				puts "now we have #{@students.length} students"
 			else 
@@ -52,7 +52,6 @@ end
 def show_students
 	print_header
 	prints_student_details
-	print_footer
 end
 
 def interactive_menu
@@ -87,19 +86,27 @@ end
 
 
 def prints_student_details
-	#lists the cohort
-	cohorts.each do |cohort|
-		print "The #{cohort} cohort\n"
-	#lists the students in that cohort
-		@students.select {|x| x[:cohort] == cohort}.each_with_index do |student, i|
-			print "#{i + 1}. #{student[:name]}. Their hobby is #{student[:hobby]} and they were born on the #{student[:dob]} in #{student[:cob]}.\n".center(50) 
+	if !@students.empty?
+		#lists the cohort
+		cohorts.each do |cohort|
+			print "The #{cohort} cohort\n"
+		#lists the students in that cohort
+			@students.select {|x| x[:cohort] == cohort}.each_with_index do |student, i|
+				print "#{i + 1}. #{student[:name]}. Their hobby is #{student[:hobby]} and they were born on the #{student[:dob]} in #{student[:cob]}.\n".center(50) 
+				if @students.length > 1
+					 puts "Overall, we have #{@students.length} great students " 
+				else puts "Overall, we have #{@students.length} great student"
+				end
+			end
 		end
-	end	
+	else
+		puts "The student directory is currently empty"
+	end
 end
 
 #finally, we print the total
 def print_footer
-	puts "Overall, we have #{@students.length} great students "
+	
 end
 
 
